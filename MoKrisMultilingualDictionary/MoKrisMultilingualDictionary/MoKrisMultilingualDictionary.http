@@ -1,0 +1,6 @@
+@MoKrisMultilingualDictionary_HostAddress = http://localhost:5204
+
+GET {{MoKrisMultilingualDictionary_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

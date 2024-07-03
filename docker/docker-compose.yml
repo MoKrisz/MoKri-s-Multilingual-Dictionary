@@ -1,0 +1,14 @@
+version: '3.8'
+name: mokris-multilingual-dictionary
+services:
+  postgres-db:
+    image: postgres:latest
+    container_name: postgres-db
+    env_file:
+      - path: ./postgres-db.env
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+volumes:
+  pgdata:
