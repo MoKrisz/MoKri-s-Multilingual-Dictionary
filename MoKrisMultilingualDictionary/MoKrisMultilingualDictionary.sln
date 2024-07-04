@@ -13,9 +13,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoKrisMultilingualDictionar
 		{D812CF1E-6310-4098-911F-8C8E75BA834D} = {D812CF1E-6310-4098-911F-8C8E75BA834D}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dictionary.Data", "Dictionary.Data\Dictionary.Data.csproj", "{3D18A3CD-A9D2-4918-9239-F84F13B54CA5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dictionary.Data", "Dictionary.Data\Dictionary.Data.csproj", "{3D18A3CD-A9D2-4918-9239-F84F13B54CA5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dictionary.Models", "Dictionary.Model\Dictionary.Models.csproj", "{BDE8720F-420A-44C8-86A7-1D09E66B0592}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dictionary.Models", "Dictionary.Model\Dictionary.Models.csproj", "{BDE8720F-420A-44C8-86A7-1D09E66B0592}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dictionary.Tests", "Dictionary.Tests", "{33E14B03-60D3-415D-9267-8A71DAA8AA3A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dictionary.Tests.IntegrationsTests.WebApi", "Dictionary.Tests.IntegrationsTests.WebApi\Dictionary.Tests.IntegrationsTests.WebApi.csproj", "{4D59255D-6B3E-4112-BD74-677BA3B38C9D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,9 +43,16 @@ Global
 		{BDE8720F-420A-44C8-86A7-1D09E66B0592}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BDE8720F-420A-44C8-86A7-1D09E66B0592}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BDE8720F-420A-44C8-86A7-1D09E66B0592}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D59255D-6B3E-4112-BD74-677BA3B38C9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D59255D-6B3E-4112-BD74-677BA3B38C9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D59255D-6B3E-4112-BD74-677BA3B38C9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D59255D-6B3E-4112-BD74-677BA3B38C9D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4D59255D-6B3E-4112-BD74-677BA3B38C9D} = {33E14B03-60D3-415D-9267-8A71DAA8AA3A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {BCFB7EF8-F27B-4625-B65C-ECC84D30A230}
