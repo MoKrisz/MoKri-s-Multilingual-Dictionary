@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dictionary.Models", "Dictio
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dictionary.Tests", "Dictionary.Tests", "{33E14B03-60D3-415D-9267-8A71DAA8AA3A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dictionary.Tests.IntegrationsTests.WebApi", "Dictionary.Tests.IntegrationsTests.WebApi\Dictionary.Tests.IntegrationsTests.WebApi.csproj", "{4D59255D-6B3E-4112-BD74-677BA3B38C9D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dictionary.Tests.IntegrationTests.WebApi", "Dictionary.Tests.IntegrationsTests.WebApi\Dictionary.Tests.IntegrationTests.WebApi.csproj", "{4D59255D-6B3E-4112-BD74-677BA3B38C9D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
