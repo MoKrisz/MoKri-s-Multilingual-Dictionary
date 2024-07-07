@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace MoKrisMultilingualDictionary.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
     public class WordController : ControllerBase
     {
         private readonly IMediator mediator;
@@ -16,7 +15,8 @@ namespace MoKrisMultilingualDictionary.Controllers
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
-        [HttpGet]
+        public const string GetWordRoute = "word";
+        [HttpGet(GetWordRoute)]
         public async Task<WordDto> GetWord([FromQuery] int wordId)
         {
             var request = new GetWordRequest { WordId = wordId };
