@@ -18,6 +18,13 @@ builder.Services.AddAutoMapper(typeof(Program));
 
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(GetWordHandler).Assembly));
 
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(MyAllowSpecificOrigins, policy =>
+        policy.WithOrigins("http://localhost:5173"));
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -28,6 +35,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(MyAllowSpecificOrigins);
 
 app.UseAuthorization();
 
