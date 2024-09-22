@@ -22,5 +22,13 @@ namespace MoKrisMultilingualDictionary.Controllers
             var request = new GetWordRequest { WordId = wordId };
             return await mediator.Send(request);
         }
+
+        public const string GetWordsRoute = "words";
+        [HttpGet(GetWordsRoute)]
+        public async Task<List<WordDto>> GetWords()
+        {
+            var request = new GetWordsRequest();
+            return await mediator.Send(request);
+        }
     }
 }
