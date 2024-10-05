@@ -23,6 +23,14 @@ namespace MoKrisMultilingualDictionary.Controllers
             return await mediator.Send(request);
         }
 
+        public const string PostWordRoute = "word";
+        [HttpPost(PostWordRoute)]
+        public async Task<int> PostWord([FromBody] WordDto wordDto)
+        {
+            var request = new PostWordRequest { Word = wordDto };
+            return await mediator.Send(request);
+        }
+
         public const string GetWordsRoute = "words";
         [HttpGet(GetWordsRoute)]
         public async Task<List<WordDto>> GetWords()
@@ -30,5 +38,7 @@ namespace MoKrisMultilingualDictionary.Controllers
             var request = new GetWordsRequest();
             return await mediator.Send(request);
         }
+
+
     }
 }
