@@ -1,6 +1,7 @@
 using Dictionary.BusinessLogic;
 using Dictionary.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,7 +22,10 @@ var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(MyAllowSpecificOrigins, policy =>
-        policy.WithOrigins("http://localhost:5173"));
+        policy.WithOrigins("http://localhost:5173")
+            .WithHeaders(HeaderNames.ContentType)
+            .WithMethods("POST", "PUT")
+            );
 });
 
 var app = builder.Build();
