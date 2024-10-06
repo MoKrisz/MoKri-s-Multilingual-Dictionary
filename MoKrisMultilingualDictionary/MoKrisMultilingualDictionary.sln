@@ -16,15 +16,13 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dictionary.Data", "Dictionary.Data\Dictionary.Data.csproj", "{3D18A3CD-A9D2-4918-9239-F84F13B54CA5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dictionary.Models", "Dictionary.Model\Dictionary.Models.csproj", "{BDE8720F-420A-44C8-86A7-1D09E66B0592}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6F306CCF-7D4B-4CFE-875F-50A1C4D5B2FE} = {6F306CCF-7D4B-4CFE-875F-50A1C4D5B2FE}
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dictionary.Tests", "Dictionary.Tests", "{33E14B03-60D3-415D-9267-8A71DAA8AA3A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dictionary.Tests.IntegrationTests.WebApi", "Dictionary.Tests.IntegrationTests.WebApi\Dictionary.Tests.IntegrationTests.WebApi.csproj", "{A9E9BF37-4DA1-40BA-BF28-AE27F1FA001F}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dictionary.Validations", "Dictionary.Validations\Dictionary.Validations.csproj", "{CF9D1471-6700-45E6-ADD7-22DFF3B9750F}"
-	ProjectSection(ProjectDependencies) = postProject
-		{6F306CCF-7D4B-4CFE-875F-50A1C4D5B2FE} = {6F306CCF-7D4B-4CFE-875F-50A1C4D5B2FE}
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dictionary.Resources", "Dictionary.Resources\Dictionary.Resources.csproj", "{6F306CCF-7D4B-4CFE-875F-50A1C4D5B2FE}"
 EndProject
@@ -54,10 +52,6 @@ Global
 		{A9E9BF37-4DA1-40BA-BF28-AE27F1FA001F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9E9BF37-4DA1-40BA-BF28-AE27F1FA001F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9E9BF37-4DA1-40BA-BF28-AE27F1FA001F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CF9D1471-6700-45E6-ADD7-22DFF3B9750F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CF9D1471-6700-45E6-ADD7-22DFF3B9750F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CF9D1471-6700-45E6-ADD7-22DFF3B9750F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CF9D1471-6700-45E6-ADD7-22DFF3B9750F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6F306CCF-7D4B-4CFE-875F-50A1C4D5B2FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6F306CCF-7D4B-4CFE-875F-50A1C4D5B2FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F306CCF-7D4B-4CFE-875F-50A1C4D5B2FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
