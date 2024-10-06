@@ -4,6 +4,10 @@ namespace Dictionary.Models.Builders
 {
     public class WordBuilder : BuilderBase<Word>
     {
+        public WordBuilder(Word entity) : base(entity)
+        {
+        }
+
         public WordBuilder SetArticle(string? article)
         {
             _entity.Article = article;

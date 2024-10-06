@@ -1,6 +1,6 @@
 ﻿using Dictionary.BusinessLogic.Requests;
 using Dictionary.Data;
-using Dictionary.Models.Builders;
+using Dictionary.Models;
 using Dictionary.Models.Enums;
 using MediatR;
 
@@ -18,7 +18,6 @@ namespace Dictionary.BusinessLogic
         public async Task<int> Handle(PostWordRequest request, CancellationToken cancellationToken)
         {
             var wordDto = request.Word;
-            var wordBuilder = new WordBuilder();
 
             if (!Enum.TryParse<WordTypeEnum>(wordDto.Type.ToString(), out var wordType) ||
                 !Enum.IsDefined(wordType))
@@ -32,6 +31,8 @@ namespace Dictionary.BusinessLogic
                 throw new ArgumentOutOfRangeException(nameof(wordDto.LanguageCode), "Invalid language.");
             };
 
+            var wordBuilder = new Word().GetBuilder();
+
             var word = wordBuilder.SetArticle(wordDto.Article)
                 .SetText(wordDto.Text)
                 .SetPlural(wordDto.Plural)
@@ -39,8 +40,6 @@ namespace Dictionary.BusinessLogic
                 .SetConjugation(wordDto.Conjugation)
                 .SetLanguageCode(language)
                 .Build();
-
-            ;
 
             await this.dbContext.Words.AddAsync(word, cancellationToken);
             await this.dbContext.SaveChangesAsync(cancellationToken);

@@ -1,12 +1,12 @@
 ﻿namespace Dictionary.Models.Builders
 {
-    public abstract class BuilderBase<T> where T : class, new()
+    public abstract class BuilderBase<T> where T : class
     {
         protected T _entity;
 
-        public BuilderBase()
+        public BuilderBase(T entity)
         {
-            _entity = new T();
+            _entity = entity;
         }
 
         public T Build()
