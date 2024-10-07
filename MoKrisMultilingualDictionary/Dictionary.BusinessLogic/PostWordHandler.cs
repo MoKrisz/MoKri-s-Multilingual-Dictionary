@@ -1,8 +1,8 @@
 ﻿using Dictionary.BusinessLogic.Requests;
 using Dictionary.Data;
-using Dictionary.Models;
 using Dictionary.Models.Enums;
 using MediatR;
+using static Dictionary.Models.Word;
 
 namespace Dictionary.BusinessLogic
 {
@@ -31,7 +31,7 @@ namespace Dictionary.BusinessLogic
                 throw new ArgumentOutOfRangeException(nameof(wordDto.LanguageCode), "Invalid language.");
             };
 
-            var wordBuilder = new Word().GetBuilder();
+            var wordBuilder = new WordBuilder();
 
             var word = wordBuilder.SetArticle(wordDto.Article)
                 .SetText(wordDto.Text)
