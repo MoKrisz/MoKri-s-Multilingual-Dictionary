@@ -35,6 +35,7 @@ namespace Dictionary.Validations
 
             RuleFor(x => x.Type)
                 .NotEmpty()
+                .NotEqual(WordTypeEnum.None)
                 .WithMessage(x => string.Format(ValidationMessages.MustHaveValue, nameof(x.Type)));
 
             RuleFor(x => x.Conjugation)
@@ -48,6 +49,7 @@ namespace Dictionary.Validations
 
             RuleFor(x => x.LanguageCode)
                 .NotEmpty()
+                .NotEqual(LanguageCodeEnum.None)
                 .WithMessage(x => string.Format(ValidationMessages.MustHaveValue, nameof(x.LanguageCode)));
         }
     }

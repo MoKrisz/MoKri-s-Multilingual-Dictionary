@@ -18,6 +18,9 @@ namespace Dictionary.Models
             return new WordBuilder(this);
         }
 
+        private Word() 
+        { }
+
         public class WordBuilder : BuilderBase<Word>
         {
             public WordBuilder() : this(new Word())

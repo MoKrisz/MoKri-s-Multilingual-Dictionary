@@ -15,6 +15,13 @@ namespace Dictionary.Models
 
         public T Build()
         {
+            var validationResult = _validator.Validate(_entity);
+
+            if (!validationResult.IsValid) 
+            {
+                throw new ValidationException(validationResult.Errors);
+            }
+
             return _entity;
         }
     }
