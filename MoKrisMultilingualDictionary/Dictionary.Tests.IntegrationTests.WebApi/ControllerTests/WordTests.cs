@@ -1,10 +1,9 @@
-using Dictionary.Models.Builders;
 using Dictionary.Models.Dtos;
 using Dictionary.Models.Enums;
 using FluentAssertions;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 using MoKrisMultilingualDictionary.Controllers;
 using System.Text.Json;
+using static Dictionary.Models.Word;
 
 namespace Dictionary.Tests.IntegrationTests.WebApi.ControllerTests
 {
