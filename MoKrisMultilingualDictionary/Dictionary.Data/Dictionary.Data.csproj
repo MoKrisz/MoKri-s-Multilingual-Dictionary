@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Dictionary.Model\Dictionary.Models.csproj" />
+    <ProjectReference Include="..\Dictionary.Models\Dictionary.Models.csproj" />
   </ItemGroup>
 
 </Project>
