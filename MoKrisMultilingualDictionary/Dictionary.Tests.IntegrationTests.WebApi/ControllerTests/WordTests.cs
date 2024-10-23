@@ -1,22 +1,30 @@
 using Dictionary.Models.Dtos;
 using Dictionary.Models.Enums;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using MoKrisMultilingualDictionary.Controllers;
+using System.Net.Http.Json;
 using System.Text.Json;
 using static Dictionary.Models.Word;
 
 namespace Dictionary.Tests.IntegrationTests.WebApi.ControllerTests
 {
-    public class WordTests : IntegrationTestBase
+    [Collection("IntegrationTestCollection")]
+    public class WordTests
     {
-        public WordTests(WebApplicationFactoryWithDbContext<Program> factory) : base(factory)
+        private readonly IntegrationTestFixture<Program> fixture;
+        private readonly HttpClient client;
+
+        public WordTests(IntegrationTestFixture<Program> fixture)
         {
+            this.fixture = fixture ?? throw new ArgumentNullException(nameof(fixture));
+            client = fixture.Client;
         }
 
         [Fact]
         public async Task GetWordTest()
         {
-            var dbContext = GetDatabase();
+            var dbContext = await fixture.GetDatabase();
 
             var word = new WordBuilder()
                 .SetArticle("die")
@@ -30,7 +38,7 @@ namespace Dictionary.Tests.IntegrationTests.WebApi.ControllerTests
             await dbContext.SaveChangesAsync();
 
             var url = $"/{WordController.GetWordRoute}?wordId={word.WordId}";
-            var response = await _client.GetAsync(url);
+            var response = await client.GetAsync(url);
             response.EnsureSuccessStatusCode();
 
             var jsonResult = await response.Content.ReadAsStringAsync();
