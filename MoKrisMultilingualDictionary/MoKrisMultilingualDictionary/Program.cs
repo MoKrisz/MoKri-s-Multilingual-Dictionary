@@ -1,7 +1,9 @@
 using Dictionary.BusinessLogic;
 using Dictionary.Data;
+using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Net.Http.Headers;
+using MoKrisMultilingualDictionary;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +29,16 @@ builder.Services.AddCors(options =>
             .WithMethods("POST", "PUT")
             );
 });
+
+var odataEdmModel = ODataEdmModelBuilder.GetEdmModel();
+builder.Services.AddControllers().AddOData(
+    options => options.Select()
+        .Filter()
+        .OrderBy()
+        .Expand()
+        .Count()
+        .SetMaxTop(100)
+        .AddRouteComponents("odata", odataEdmModel));
 
 var app = builder.Build();
 
