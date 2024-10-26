@@ -2,7 +2,7 @@ using Dictionary.Models.Enums;
 using FluentValidation;
 using static Dictionary.Models.Word;
 
-namespace Dictionary.Tests.UnitTests.Model
+namespace Dictionary.Tests.UnitTests.ModelTests
 {
     public class WordBuilderTests
     {

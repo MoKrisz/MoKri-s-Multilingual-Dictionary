@@ -26,9 +26,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dictionary.Tests.Integratio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dictionary.Resources", "Dictionary.Resources\Dictionary.Resources.csproj", "{6F306CCF-7D4B-4CFE-875F-50A1C4D5B2FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dictionary.Tests.UnitTests", "Dictionary.Tests.UnitTests\Dictionary.Tests.UnitTests.csproj", "{3FD5B2DC-F92C-432E-89FB-2A879567B7B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dictionary.Tests.UnitTests", "Dictionary.Tests.UnitTests\Dictionary.Tests.UnitTests.csproj", "{3FD5B2DC-F92C-432E-89FB-2A879567B7B1}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BDE8720F-420A-44C8-86A7-1D09E66B0592} = {BDE8720F-420A-44C8-86A7-1D09E66B0592}
+		{D812CF1E-6310-4098-911F-8C8E75BA834D} = {D812CF1E-6310-4098-911F-8C8E75BA834D}
 	EndProjectSection
 EndProject
 Global
