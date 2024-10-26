@@ -82,5 +82,43 @@ namespace Dictionary.Tests.IntegrationTests.WebApi.ControllerTests
             assertWord.Type.Should().Be(WordTypeEnum.Noun);
             assertWord.LanguageCode.Should().Be(LanguageCodeEnum.DE);
         }
+
+        [Fact]
+        public async Task PutWordTest()
+        {
+            var dbContext = await fixture.GetDatabase();
+
+            var word = new WordBuilder()
+                .SetText("Test")
+                .SetPlural("Tests")
+                .SetType(WordTypeEnum.Noun)
+                .SetLanguageCode(LanguageCodeEnum.EN)
+                .Build();
+
+            await dbContext.Words.AddAsync(word);
+
+            await dbContext.SaveChangesAsync();
+
+            var updateWordDto = new WordDto
+            {
+                WordId = word.WordId,
+                Text = "test",
+                Conjugation = "test/test/tests/test/test/test",
+                Type = (int)WordTypeEnum.Verb,
+                LanguageCode = (int)LanguageCodeEnum.EN
+            };
+
+            var url = $"/{WordController.PutWordRoute}";
+            var response = await client.PutAsJsonAsync(url, updateWordDto);
+            response.EnsureSuccessStatusCode();
+
+            var assertDb = await fixture.GetDatabase(false);
+            var assertWord = await assertDb.Words.SingleAsync(w => w.WordId == word.WordId);
+            assertWord.Article.Should().Be(updateWordDto.Article);
+            assertWord.Text.Should().Be(updateWordDto.Text);
+            assertWord.Plural.Should().Be(updateWordDto.Plural);
+            assertWord.Type.Should().Be(WordTypeEnum.Verb);
+            assertWord.LanguageCode.Should().Be(LanguageCodeEnum.EN);
+        }
     }
 }

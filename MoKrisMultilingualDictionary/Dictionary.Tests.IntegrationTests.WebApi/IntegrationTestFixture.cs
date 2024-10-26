@@ -68,9 +68,15 @@ namespace Dictionary.Tests.IntegrationTests.WebApi
             builder.UseEnvironment("Development");
         }
 
-        public async Task<DictionaryContext> GetDatabase()
+        public async Task<DictionaryContext> GetDatabase(bool shouldRefresh = true)
         {
-            await ResetDatabase();
+            if (shouldRefresh)
+            {
+                await ResetDatabase();
+            }
+
+            var scope = Services.CreateScope();
+            dbContext = scope.ServiceProvider.GetRequiredService<DictionaryContext>();
             return dbContext;
         }
 
