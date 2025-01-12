@@ -31,14 +31,16 @@ builder.Services.AddCors(options =>
 });
 
 var odataEdmModel = ODataEdmModelBuilder.GetEdmModel();
-builder.Services.AddControllers().AddOData(
-    options => options.Select()
-        .Filter()
-        .OrderBy()
-        .Expand()
-        .Count()
-        .SetMaxTop(100)
-        .AddRouteComponents("odata", odataEdmModel));
+builder.Services.AddControllers()
+    .AddOData(
+        options => options.Select()
+                          .Filter()
+                          .OrderBy()
+                          .Expand()
+                          .Count()
+                          .SetMaxTop(100)
+                          .AddRouteComponents("odata", odataEdmModel)
+    );
 
 var app = builder.Build();
 

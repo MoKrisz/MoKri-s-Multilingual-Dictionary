@@ -9,6 +9,7 @@ namespace MoKrisMultilingualDictionary
         public static IEdmModel GetEdmModel()
         {
             var builder = new ODataConventionModelBuilder();
+            builder.EnableLowerCamelCase();
 
             builder.EntitySet<WordDto>("WordList")
                 .EntityType.HasKey(w => w.WordId);
