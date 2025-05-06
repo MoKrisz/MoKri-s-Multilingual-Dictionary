@@ -117,6 +117,7 @@ namespace Dictionary.Tests.IntegrationTests.WebApi.ControllerTests
             assertWord.Article.Should().Be(updateWordDto.Article);
             assertWord.Text.Should().Be(updateWordDto.Text);
             assertWord.Plural.Should().Be(updateWordDto.Plural);
+            assertWord.Conjugation.Should().Be(updateWordDto.Conjugation);
             assertWord.Type.Should().Be(WordTypeEnum.Verb);
             assertWord.LanguageCode.Should().Be(LanguageCodeEnum.EN);
         }
