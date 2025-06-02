@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Dictionary.BusinessLogic.Exceptions
+﻿namespace Dictionary.BusinessLogic.Exceptions
 {
     public class NotFoundException : Exception
     {

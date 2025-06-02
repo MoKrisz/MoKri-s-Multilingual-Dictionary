@@ -1,6 +1,6 @@
-using Dictionary.Models.Enums;
+using Dictionary.Domain.Builders;
+using Dictionary.Domain.Enums;
 using FluentValidation;
-using static Dictionary.Models.Word;
 
 namespace Dictionary.Tests.UnitTests.ModelTests
 {

@@ -1,4 +1,4 @@
-﻿namespace Dictionary.Models.Enums
+﻿namespace Dictionary.Domain.Enums
 {
     public enum WordTypeEnum
     {

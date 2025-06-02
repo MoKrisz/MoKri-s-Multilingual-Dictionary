@@ -1,9 +1,8 @@
-﻿using Dictionary.Models;
-using Dictionary.Models.Enums;
+﻿using Dictionary.Domain.Enums;
 using Dictionary.Resources.Messages;
 using FluentValidation;
 
-namespace Dictionary.Validations
+namespace Dictionary.Domain.Validators
 {
     public class WordValidator : AbstractValidator<Word>
     {

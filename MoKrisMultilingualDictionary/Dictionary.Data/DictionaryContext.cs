@@ -1,4 +1,4 @@
-﻿using Dictionary.Models;
+﻿using Dictionary.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace Dictionary.Data
