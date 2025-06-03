@@ -123,6 +123,9 @@
   <data name="ConjugationMustBeEmpty" xml:space="preserve">
     <value>Only verbs can have conjugation.</value>
   </data>
+  <data name="EitherMustHaveValue" xml:space="preserve">
+    <value>Either {0} or {1} must have a value.</value>
+  </data>
   <data name="MustHaveValue" xml:space="preserve">
     <value>The {0} must have a value.</value>
   </data>
