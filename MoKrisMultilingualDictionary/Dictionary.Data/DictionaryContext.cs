@@ -20,6 +20,7 @@ namespace Dictionary.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasDefaultSchema("dictionary");
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(DictionaryContext).Assembly);
         }
     }
 }
