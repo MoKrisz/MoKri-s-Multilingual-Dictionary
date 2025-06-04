@@ -3,18 +3,19 @@ using FluentValidation;
 
 namespace Dictionary.Domain.Validators
 {
-    public class TranslationGroupDescriptionValidator : AbstractValidator<TranslationGroupDescription>
+    public class TranslationGroupTagValidator : AbstractValidator<TranslationGroupTag>
     {
-        public TranslationGroupDescriptionValidator()
+        public TranslationGroupTagValidator()
         {
-            RuleFor(x => x.Description)
-                .NotEmpty()
-                .WithMessage(x => string.Format(ValidationMessages.MustHaveValue, nameof(x.Description)));
-
             RuleFor(x => x.TranslationGroupId)
                 .NotEmpty()
                 .When(x => x.TranslationGroup == null)
                 .WithMessage(x => string.Format(ValidationMessages.EitherMustHaveValue, nameof(x.TranslationGroupId), nameof(x.TranslationGroup)));
+
+            RuleFor(x => x.TagId)
+                .NotEmpty()
+                .When(x => x.Tag == null)
+                .WithMessage(x => string.Format(ValidationMessages.EitherMustHaveValue, nameof(x.TagId), nameof(x.Tag)));
         }
     }
 }

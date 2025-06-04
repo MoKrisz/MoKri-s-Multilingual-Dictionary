@@ -15,5 +15,11 @@ namespace Dictionary.Domain.Builders
             _entity.Text = text;
             return this;
         }
+
+        public TagBuilder SetTranslationGroupTags(List<TranslationGroupTag> translationGroupTags)
+        {
+            _entity.TranslationGroupTags = translationGroupTags;
+            return this;
+        }
     }
 }

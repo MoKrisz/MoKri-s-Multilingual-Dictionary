@@ -46,5 +46,11 @@ namespace Dictionary.Domain.Builders
             _entity.LanguageCode = languageCode;
             return this;
         }
+
+        public WordBuilder SetWordTranslationGroups(List<WordTranslationGroup> wordTranslationGroups)
+        {
+            _entity.WordTranslationGroups = wordTranslationGroups;
+            return this;
+        }
     }
 }

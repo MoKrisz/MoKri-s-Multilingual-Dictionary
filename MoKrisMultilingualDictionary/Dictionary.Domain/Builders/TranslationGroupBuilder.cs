@@ -27,5 +27,11 @@ namespace Dictionary.Domain.Builders
             _entity.WordTranslationGroups = wordTranslationGroups;
             return this;
         }
+
+        public TranslationGroupBuilder SetTranslationGroupTags(List<TranslationGroupTag> translationGroupTags)
+        {
+            _entity.TranslationGroupTags = translationGroupTags;
+            return this;
+        }
     }
 }

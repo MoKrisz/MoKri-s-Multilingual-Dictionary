@@ -12,6 +12,7 @@ namespace Dictionary.Domain
         public WordTypeEnum Type { get; internal set; }
         public string? Conjugation { get; internal set; }
         public LanguageCodeEnum LanguageCode { get; internal set; }
+        public List<WordTranslationGroup> WordTranslationGroups { get; set; } = new();
 
         public WordBuilder GetBuilder() => new WordBuilder(this);
 
