@@ -9,6 +9,7 @@ namespace Dictionary.Domain.Validators
         {
             RuleFor(x => x.TranslationGroupDescriptionId)
                 .NotEmpty()
+                .When(x => x.TranslationGroupDescription == null)
                 .WithMessage(x => string.Format(ValidationMessages.EitherMustHaveValue, nameof(x.TranslationGroupDescriptionId), nameof(x.TranslationGroupDescription)));
         }
     }

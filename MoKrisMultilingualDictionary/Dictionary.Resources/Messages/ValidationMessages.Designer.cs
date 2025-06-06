@@ -88,6 +88,15 @@ namespace Dictionary.Resources.Messages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The length of {0} cannot exceed {1} characters..
+        /// </summary>
+        public static string MaximumLength {
+            get {
+                return ResourceManager.GetString("MaximumLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The {0} must have a value..
         /// </summary>
         public static string MustHaveValue {

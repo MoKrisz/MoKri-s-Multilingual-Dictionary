@@ -1,4 +1,5 @@
-﻿using Dictionary.Resources.Messages;
+﻿using Dictionary.Domain.Constants;
+using Dictionary.Resources.Messages;
 using FluentValidation;
 
 namespace Dictionary.Domain.Validators
@@ -9,7 +10,10 @@ namespace Dictionary.Domain.Validators
         {
             RuleFor(x => x.Description)
                 .NotEmpty()
-                .WithMessage(x => string.Format(ValidationMessages.MustHaveValue, nameof(x.Description)));
+                .WithMessage(x => string.Format(ValidationMessages.MustHaveValue, nameof(x.Description)))
+                //
+                .MaximumLength(TranslationGroupDescriptionConstants.DescriptionMaxLength)
+                .WithMessage(x => string.Format(ValidationMessages.MaximumLength, nameof(x.Description), TranslationGroupDescriptionConstants.DescriptionMaxLength));
 
             RuleFor(x => x.TranslationGroupId)
                 .NotEmpty()
