@@ -1,4 +1,5 @@
 ﻿using Dictionary.Domain;
+using Dictionary.Domain.Constants;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -9,7 +10,7 @@ namespace Dictionary.Data.Configurations
         public void Configure(EntityTypeBuilder<Tag> builder)
         {
             builder.Property(t => t.Text)
-                .HasMaxLength(100)
+                .HasMaxLength(TagConstants.TextMaxLength)
                 .IsRequired();
 
             builder.HasIndex(t => t.Text).IsUnique();

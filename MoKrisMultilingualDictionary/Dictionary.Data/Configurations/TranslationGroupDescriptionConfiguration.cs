@@ -1,4 +1,5 @@
 ﻿using Dictionary.Domain;
+using Dictionary.Domain.Constants;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -9,7 +10,7 @@ namespace Dictionary.Data.Configurations
         public void Configure(EntityTypeBuilder<TranslationGroupDescription> builder)
         {
             builder.Property(tgd => tgd.Description)
-                .HasMaxLength(100)
+                .HasMaxLength(TranslationGroupDescriptionConstants.DescriptionMaxLength)
                 .IsRequired();
 
             builder.HasIndex(tgd => tgd.Description);
