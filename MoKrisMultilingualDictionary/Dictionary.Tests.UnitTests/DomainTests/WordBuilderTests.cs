@@ -1,8 +1,9 @@
-using Dictionary.Models.Enums;
+using Dictionary.Domain.Builders;
+using Dictionary.Domain.Constants;
+using Dictionary.Domain.Enums;
 using FluentValidation;
-using static Dictionary.Models.Word;
 
-namespace Dictionary.Tests.UnitTests.ModelTests
+namespace Dictionary.Tests.UnitTests.DomainTests
 {
     public class WordBuilderTests
     {
@@ -21,6 +22,8 @@ namespace Dictionary.Tests.UnitTests.ModelTests
             { "der", LanguageCodeEnum.DE, WordTypeEnum.Adjective, true },
             { "der", LanguageCodeEnum.EN, WordTypeEnum.Noun, true },
             { "der", LanguageCodeEnum.HU, WordTypeEnum.Noun, true },
+            { new string('a', WordConstants.ArticleMaxLength), LanguageCodeEnum.DE, WordTypeEnum.Noun, false },
+            { new string('a', WordConstants.ArticleMaxLength + 1), LanguageCodeEnum.DE, WordTypeEnum.Noun, true },
         };
 
         [Theory]
@@ -51,6 +54,8 @@ namespace Dictionary.Tests.UnitTests.ModelTests
             { null, true },
             { string.Empty, true },
             { "Test", false },
+            { new string('a', WordConstants.TextMaxLength), false },
+            { new string('a', WordConstants.TextMaxLength + 1), true },
         };
 
         [Theory]
@@ -66,6 +71,8 @@ namespace Dictionary.Tests.UnitTests.ModelTests
             { string.Empty, WordTypeEnum.Verb, false },
             { "Tests", WordTypeEnum.Noun, false },
             { string.Empty, WordTypeEnum.Noun, true },
+            { new string('a', WordConstants.PluralMaxLength), WordTypeEnum.Noun, false },
+            { new string('a', WordConstants.PluralMaxLength + 1), WordTypeEnum.Noun, true },
         };
 
         [Theory]
@@ -107,6 +114,8 @@ namespace Dictionary.Tests.UnitTests.ModelTests
             { string.Empty, WordTypeEnum.Verb, true },
             { "invalid_conjugation_just_for_testing", WordTypeEnum.Noun, true },
             { "invalid_conjugation_just_for_testing", WordTypeEnum.Adjective, true },
+            { new string('a', WordConstants.ConjugationMaxLength), WordTypeEnum.Verb, false },
+            { new string('a', WordConstants.ConjugationMaxLength + 1), WordTypeEnum.Verb, true },
         };
 
         [Theory]
@@ -156,7 +165,7 @@ namespace Dictionary.Tests.UnitTests.ModelTests
             }
         }
 
-        private static WordBuilder GetWordBuilderWithValidData()
+        public static WordBuilder GetWordBuilderWithValidData()
         {
             return new WordBuilder()
                 .SetArticle(null)

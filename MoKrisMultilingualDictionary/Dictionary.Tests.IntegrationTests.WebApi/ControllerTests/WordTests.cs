@@ -1,11 +1,11 @@
+using Dictionary.Domain.Builders;
+using Dictionary.Domain.Enums;
 using Dictionary.Models.Dtos;
-using Dictionary.Models.Enums;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using MoKrisMultilingualDictionary.Controllers;
 using System.Net.Http.Json;
 using System.Text.Json;
-using static Dictionary.Models.Word;
 
 namespace Dictionary.Tests.IntegrationTests.WebApi.ControllerTests
 {
@@ -44,7 +44,8 @@ namespace Dictionary.Tests.IntegrationTests.WebApi.ControllerTests
             var jsonResult = await response.Content.ReadAsStringAsync();
             var result = JsonSerializer.Deserialize<WordDto>(jsonResult);
 
-            result.WordId.Should().BeGreaterThan(0);
+            result.Should().NotBeNull();
+            result!.WordId.Should().BeGreaterThan(0);
             result.Article.Should().Be(word.Article);
             result.Text.Should().Be(word.Text);
             result.Plural.Should().Be(word.Plural);

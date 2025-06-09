@@ -1,6 +1,6 @@
 ﻿using Dictionary.BusinessLogic.Requests;
 using Dictionary.Data;
-using Dictionary.Models.Enums;
+using Dictionary.Domain.Enums;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
@@ -43,7 +43,7 @@ namespace Dictionary.BusinessLogic
                 .SetLanguageCode(language)
                 .Build();
 
-            await this.dbContext.SaveChangesAsync(cancellationToken);
+            await dbContext.SaveChangesAsync(cancellationToken);
         }
     }
 }

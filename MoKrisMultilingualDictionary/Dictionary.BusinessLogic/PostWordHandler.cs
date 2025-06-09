@@ -1,8 +1,8 @@
 ﻿using Dictionary.BusinessLogic.Requests;
 using Dictionary.Data;
-using Dictionary.Models.Enums;
+using Dictionary.Domain.Builders;
+using Dictionary.Domain.Enums;
 using MediatR;
-using static Dictionary.Models.Word;
 
 namespace Dictionary.BusinessLogic
 {
@@ -41,8 +41,8 @@ namespace Dictionary.BusinessLogic
                 .SetLanguageCode(language)
                 .Build();
 
-            await this.dbContext.Words.AddAsync(word, cancellationToken);
-            await this.dbContext.SaveChangesAsync(cancellationToken);
+            await dbContext.Words.AddAsync(word, cancellationToken);
+            await dbContext.SaveChangesAsync(cancellationToken);
 
             return word.WordId;
         }

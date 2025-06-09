@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
+using Dictionary.Domain;
 using Dictionary.Models.Dtos;
-using Dictionary.Models;
 
 namespace MoKrisMultilingualDictionary
 {

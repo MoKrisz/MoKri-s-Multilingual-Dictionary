@@ -1,9 +1,9 @@
-﻿using Dictionary.Models;
-using Dictionary.Models.Enums;
+﻿using Dictionary.Domain.Constants;
+using Dictionary.Domain.Enums;
 using Dictionary.Resources.Messages;
 using FluentValidation;
 
-namespace Dictionary.Validations
+namespace Dictionary.Domain.Validators
 {
     public class WordValidator : AbstractValidator<Word>
     {
@@ -18,11 +18,17 @@ namespace Dictionary.Validations
                 .NotEmpty()
                 .When(x => x.LanguageCode == LanguageCodeEnum.DE 
                     && x.Type == WordTypeEnum.Noun, ApplyConditionTo.CurrentValidator)
-                .WithMessage(x => string.Format(ValidationMessages.MustHaveValue, nameof(x.Article)));
+                .WithMessage(x => string.Format(ValidationMessages.MustHaveValue, nameof(x.Article)))
+                //
+                .MaximumLength(WordConstants.ArticleMaxLength)
+                .WithMessage(x => string.Format(ValidationMessages.MaximumLength, nameof(x.Article), WordConstants.ArticleMaxLength));
 
             RuleFor(x => x.Text)
                 .NotEmpty()
-                .WithMessage(x => string.Format(ValidationMessages.MustHaveValue, nameof(x.Text)));
+                .WithMessage(x => string.Format(ValidationMessages.MustHaveValue, nameof(x.Text)))
+                //
+                .MaximumLength(WordConstants.TextMaxLength)
+                .WithMessage(x => string.Format(ValidationMessages.MaximumLength, nameof(x.Text), WordConstants.TextMaxLength));
 
             RuleFor(x => x.Plural)
                 .Empty()
@@ -31,7 +37,10 @@ namespace Dictionary.Validations
                 //
                 .NotEmpty()
                 .When(x => x.Type == WordTypeEnum.Noun, ApplyConditionTo.CurrentValidator)
-                .WithMessage(x => string.Format(ValidationMessages.MustHaveValue, nameof(x.Plural)));
+                .WithMessage(x => string.Format(ValidationMessages.MustHaveValue, nameof(x.Plural)))
+                //
+                .MaximumLength(WordConstants.PluralMaxLength)
+                .WithMessage(x => string.Format(ValidationMessages.MaximumLength, nameof(x.Plural), WordConstants.PluralMaxLength));
 
             RuleFor(x => x.Type)
                 .NotEmpty()
@@ -45,7 +54,10 @@ namespace Dictionary.Validations
                 //
                 .NotEmpty()
                 .When(x => x.Type == WordTypeEnum.Verb, ApplyConditionTo.CurrentValidator)
-                .WithMessage(x => string.Format(ValidationMessages.MustHaveValue, nameof(x.Conjugation)));
+                .WithMessage(x => string.Format(ValidationMessages.MustHaveValue, nameof(x.Conjugation)))
+                //
+                .MaximumLength(WordConstants.ConjugationMaxLength)
+                .WithMessage(x => string.Format(ValidationMessages.MaximumLength, nameof(x.Conjugation), WordConstants.ConjugationMaxLength));
 
             RuleFor(x => x.LanguageCode)
                 .NotEmpty()
