@@ -1,10 +1,10 @@
+using Dictionary.Domain.Builders;
+using Dictionary.Domain.Enums;
 using Dictionary.Models.Dtos;
-using Dictionary.Models.Enums;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using static Dictionary.Models.Word;
 
 namespace Dictionary.Tests.IntegrationTests.WebApi.ControllerTests
 {

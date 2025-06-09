@@ -2,7 +2,7 @@
 using Dictionary.BusinessLogic.Exceptions;
 using Dictionary.BusinessLogic.Requests;
 using Dictionary.Data;
-using Dictionary.Models;
+using Dictionary.Domain;
 using Dictionary.Models.Dtos;
 using MediatR;
 using Microsoft.EntityFrameworkCore;

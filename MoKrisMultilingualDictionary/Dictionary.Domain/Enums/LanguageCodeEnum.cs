@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Dictionary.Models.Enums
+namespace Dictionary.Domain.Enums
 {
     public enum LanguageCodeEnum
     {

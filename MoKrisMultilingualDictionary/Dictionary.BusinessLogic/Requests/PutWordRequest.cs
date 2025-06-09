@@ -5,6 +5,6 @@ namespace Dictionary.BusinessLogic.Requests
 {
     public class PutWordRequest : IRequest
     {
-        public WordDto Word { get; set; }
+        public WordDto Word { get; set; } = default!;
     }
 }

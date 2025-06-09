@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Dictionary.Models
+namespace Dictionary.Domain.Builders
 {
     public abstract class BuilderBase<T> where T : class
     {
@@ -17,7 +17,7 @@ namespace Dictionary.Models
         {
             var validationResult = _validator.Validate(_entity);
 
-            if (!validationResult.IsValid) 
+            if (!validationResult.IsValid)
             {
                 throw new ValidationException(validationResult.Errors);
             }
