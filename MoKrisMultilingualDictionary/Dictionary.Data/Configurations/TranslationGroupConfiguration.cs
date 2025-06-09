@@ -1,4 +1,5 @@
 ﻿using Dictionary.Domain;
+using Dictionary.Domain.Constants;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -8,10 +9,11 @@ namespace Dictionary.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<TranslationGroup> builder)
         {
-            builder.HasOne(tg => tg.TranslationGroupDescription)
-                .WithOne(tgd => tgd.TranslationGroup)
-                .HasForeignKey<TranslationGroup>(tg => tg.TranslationGroupDescriptionId)
-                .OnDelete(DeleteBehavior.NoAction);
+            builder.Property(tg => tg.Description)
+                .HasMaxLength(TranslationGroupConstants.DescriptionMaxLength)
+                .IsRequired();
+
+            builder.HasIndex(tg => tg.Description);
 
             builder.HasMany(tg => tg.TranslationGroupTags)
                 .WithOne(tgt => tgt.TranslationGroup)

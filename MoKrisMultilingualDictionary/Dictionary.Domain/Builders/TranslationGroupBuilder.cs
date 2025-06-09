@@ -10,15 +10,9 @@ namespace Dictionary.Domain.Builders
         public TranslationGroupBuilder(TranslationGroup entity) : base(entity, new TranslationGroupValidator())
         { }
 
-        public TranslationGroupBuilder SetTranslationGroupDescriptionId(int translationGroupDescriptionId)
+        public TranslationGroupBuilder SetDescription(string description)
         {
-            _entity.TranslationGroupDescriptionId = translationGroupDescriptionId;
-            return this;
-        }
-
-        public TranslationGroupBuilder SetTranslationGroupDescription(TranslationGroupDescription translationGroupDescription)
-        {
-            _entity.TranslationGroupDescription = translationGroupDescription;
+            _entity.Description = description;
             return this;
         }
 

@@ -1,5 +1,5 @@
-using Dictionary.Domain;
 using Dictionary.Domain.Builders;
+using Dictionary.Domain.Constants;
 using FluentValidation;
 
 namespace Dictionary.Tests.UnitTests.DomainTests
@@ -12,20 +12,19 @@ namespace Dictionary.Tests.UnitTests.DomainTests
             BuildTranslationGroup(null, false);
         }
 
-        public static TheoryData<int, TranslationGroupDescription, bool> TranslationGroupDescriptionValidationTestData => new()
+        public static TheoryData<string?, bool> DescriptionValidationTestData => new()
         {
-            { 0, null, true },
-            { 1, null, false },
-            { 0, TranslationGroupDescriptionBuilderTests.GetTranslationGroupDescriptionBuilderWithValidData().Build(), false },
+            { null, true },
+            { string.Empty, true },
+            { "Test", false },
+            { new string('a', TranslationGroupConstants.DescriptionMaxLength), false },
+            { new string('a', TranslationGroupConstants.DescriptionMaxLength + 1), true },
         };
 
         [Theory]
-        [MemberData(nameof(TranslationGroupDescriptionValidationTestData))]
-        public void TranslationGroupDescriptionValidationTest(int translationGroupDescriptionId, TranslationGroupDescription translationGroupDescription, bool shouldFail)
-        {
-            BuildTranslationGroup(builder => builder.SetTranslationGroupDescriptionId(translationGroupDescriptionId)
-                                                .SetTranslationGroupDescription(translationGroupDescription), shouldFail);
-        }
+        [MemberData(nameof(DescriptionValidationTestData))]
+        public void DescriptionValidationTest(string? description, bool shouldFail)
+            => BuildTranslationGroup(builder => builder.SetDescription(description), shouldFail);
 
         private static void BuildTranslationGroup(Action<TranslationGroupBuilder>? builderAction, bool shouldFail)
         {
@@ -45,7 +44,7 @@ namespace Dictionary.Tests.UnitTests.DomainTests
 
         public static TranslationGroupBuilder GetTranslationGroupBuilderWithValidData()
         {
-            return new TranslationGroupBuilder().SetTranslationGroupDescriptionId(1);
+            return new TranslationGroupBuilder().SetDescription("Test");
         }
     }
 }

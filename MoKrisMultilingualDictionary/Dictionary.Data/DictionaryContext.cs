@@ -8,7 +8,6 @@ namespace Dictionary.Data
         public DbSet<Word> Words { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<TranslationGroup> TranslationGroups { get; set; }
-        public DbSet<TranslationGroupDescription> TranslationGroupDescriptions { get; set; }
         public DbSet<TranslationGroupTag> TranslationGroupTags { get; set; }
         public DbSet<WordTranslationGroup> WordTranslationGroups { get; set; }
 
