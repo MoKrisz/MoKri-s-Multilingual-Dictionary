@@ -2,11 +2,12 @@ using Dictionary.BusinessLogic.Requests;
 using Dictionary.Models.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using MoKrisMultilingualDictionary.Routes;
 
 namespace MoKrisMultilingualDictionary.Controllers
 {
     [ApiController]
-    [Route("tag")]
+    [Route(TagRoutes.ControllerBaseRoute)]
     public class TagController : ControllerBase
     {
         private readonly IMediator mediator;
@@ -16,8 +17,7 @@ namespace MoKrisMultilingualDictionary.Controllers
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
-        public const string GetClosestMatchingTagRoute = "closest-matching-tag";
-        [HttpGet(GetClosestMatchingTagRoute)]
+        [HttpGet(TagRoutes.GetClosestMatchingTagRoute)]
         public async Task<TagDto?> GetClosestMatchingTag([FromQuery] string tagText)
         {
             var request = new GetClosestMatchingTagRequest { TagText = tagText };
