@@ -9,6 +9,7 @@ namespace MoKrisMultilingualDictionary
         public MappingProfile()
         {
             CreateMap<Word, WordDto>();
+            CreateMap<Tag, TagDto>();
         }
     }
 }
