@@ -26,7 +26,7 @@ namespace Dictionary.Tests.IntegrationTests.WebApi.ControllerTests
         {
             var db = await fixture.GetDatabase();
 
-            var tag = new TagBuilder().SetText("TestTag1").Build();
+            var tag = new TagBuilder().SetText("testtag1").Build();
 
             await db.Tags.AddAsync(tag);
             await db.SaveChangesAsync();
@@ -46,24 +46,30 @@ namespace Dictionary.Tests.IntegrationTests.WebApi.ControllerTests
             response.EnsureSuccessStatusCode();
 
             var jsonResult = await response.Content.ReadAsStringAsync();
-            var resultId = Convert.ToInt32(jsonResult);
+            var result = JsonSerializer.Deserialize<TranslationGroupDto>(jsonResult);
 
-            var assertTranslationGroup = await db.TranslationGroups.AsNoTracking()
+            var assertTranslationGroup = await db.TranslationGroups
+                .AsNoTracking()
                 .Include(tg => tg.TranslationGroupTags)
                     .ThenInclude(tgt => tgt.Tag)
                 .SingleAsync();
-            assertTranslationGroup.TranslationGroupId.Should().Be(resultId);
+
+            result.Should().NotBeNull();
+            assertTranslationGroup.TranslationGroupId.Should().Be(result!.TranslationGroupId);
             assertTranslationGroup.Description.Should().Be(translationGroupDto.Description);
             assertTranslationGroup.TranslationGroupTags.Count.Should().Be(translationGroupDto.Tags.Count);
+            result.Description.Should().Be(translationGroupDto.Description);
+            result.Tags.Count.Should().Be(translationGroupDto.Tags.Count);
 
             (await db.TranslationGroupTags.CountAsync()).Should().Be(translationGroupDto.Tags.Count);
+            (await db.Tags.CountAsync()).Should().Be(translationGroupDto.Tags.Count);
 
             foreach (var tagDto in translationGroupDto.Tags)
             {
-                assertTranslationGroup.TranslationGroupTags.Any(tgt => tgt.Tag.Text == tagDto.Text).Should().BeTrue();
+                assertTranslationGroup.TranslationGroupTags.Any(tgt => tgt.Tag.Text == tagDto.Text.ToLowerInvariant()).Should().BeTrue();
+                result.Tags.Any(t => t.Text == tagDto.Text.ToLowerInvariant()).Should().BeTrue();
             }
 
-            (await db.Tags.CountAsync()).Should().Be(translationGroupDto.Tags.Count);
         }
 
         [Fact]
