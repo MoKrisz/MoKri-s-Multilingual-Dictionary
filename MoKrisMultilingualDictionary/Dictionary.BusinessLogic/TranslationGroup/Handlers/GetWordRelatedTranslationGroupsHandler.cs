@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Dictionary.BusinessLogic.TranslationGroup.Requests;
 using Dictionary.Data;
 using Dictionary.Models.Dtos;
@@ -25,6 +24,8 @@ namespace Dictionary.BusinessLogic.TranslationGroup.Handlers
             var translationGroups = await dbContext.TranslationGroups
                 .AsNoTracking()
                 .Include(tg => tg.WordTranslationGroups)
+                .Include(tg => tg.TranslationGroupTags)
+                    .ThenInclude(tgt => tgt.Tag)
                 .Where(tg => tg.WordTranslationGroups.Any(wtg => wtg.WordId == request.SourceWordId || wtg.WordId == request.TargetWordId))
                 .ToListAsync(cancellationToken);
 

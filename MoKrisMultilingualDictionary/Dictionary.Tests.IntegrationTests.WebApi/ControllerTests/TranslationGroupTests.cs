@@ -89,6 +89,15 @@ namespace Dictionary.Tests.IntegrationTests.WebApi.ControllerTests
                 .SetDescription("Test3")
                 .Build();
 
+            var tag = new TagBuilder()
+                .SetText("testtag")
+                .Build();
+
+            var translationGroupTag = new TranslationGroupTagBuilder()
+                .SetTranslationGroup(linkedTranslationGroup)
+                .SetTag(tag)
+                .Build();
+
             var sourceWord = new WordBuilder()
                 .SetText("Test")
                 .SetPlural("Tests")
@@ -128,6 +137,8 @@ namespace Dictionary.Tests.IntegrationTests.WebApi.ControllerTests
             await db.Words.AddRangeAsync(sourceWord, targetWord);
             await db.TranslationGroups.AddRangeAsync(linkedTranslationGroup, potentialTranslationGroup1, potentialTranslationGroup2);
             await db.WordTranslationGroups.AddRangeAsync(wordTranslationGroups);
+            await db.Tags.AddAsync(tag);
+            await db.TranslationGroupTags.AddAsync(translationGroupTag);
             await db.SaveChangesAsync();
 
             var url = $"/{TranslationGroupRoutes.ControllerBaseRoute}/{TranslationGroupRoutes.WordRelatedTranslationGroupsRoute}?sourceWordId={sourceWord.WordId}&targetWordId={targetWord.WordId}";
@@ -140,6 +151,8 @@ namespace Dictionary.Tests.IntegrationTests.WebApi.ControllerTests
             result.Should().NotBeNull();
             result!.LinkedTranslationGroups.Count.Should().Be(1);
             result.LinkedTranslationGroups[0].TranslationGroupId.Should().Be(linkedTranslationGroup.TranslationGroupId);
+            result.LinkedTranslationGroups[0].Tags.Count().Should().Be(1);
+            result.LinkedTranslationGroups[0].Tags[0].Text.Should().Be(tag.Text);
             result.PotentialTranslationGroups.Count.Should().Be(2);
             result.PotentialTranslationGroups.Any(ptg => ptg.TranslationGroupId == potentialTranslationGroup1.TranslationGroupId).Should().BeTrue();
             result.PotentialTranslationGroups.Any(ptg => ptg.TranslationGroupId == potentialTranslationGroup2.TranslationGroupId).Should().BeTrue();
