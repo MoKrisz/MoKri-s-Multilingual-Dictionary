@@ -19,7 +19,7 @@ namespace MoKrisMultilingualDictionary.Controllers
         }
 
         [HttpPost]
-        public async Task<int> PostTranslationGroup([FromBody] TranslationGroupDto translationGroupDto)
+        public async Task<TranslationGroupDto> PostTranslationGroup([FromBody] TranslationGroupDto translationGroupDto)
         {
             var request = new PostTranslationGroupRequest { TranslationGroup = translationGroupDto };
             return await mediator.Send(request);

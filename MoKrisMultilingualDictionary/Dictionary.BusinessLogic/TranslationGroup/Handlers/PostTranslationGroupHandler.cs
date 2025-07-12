@@ -1,4 +1,5 @@
-﻿using Dictionary.BusinessLogic.TranslationGroup.Requests;
+﻿using AutoMapper;
+using Dictionary.BusinessLogic.TranslationGroup.Requests;
 using Dictionary.Data;
 using Dictionary.Domain;
 using Dictionary.Domain.Builders;
@@ -8,16 +9,18 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dictionary.BusinessLogic.TranslationGroup.Handlers
 {
-    public class PostTranslationGroupHandler : IRequestHandler<PostTranslationGroupRequest, int>
+    public class PostTranslationGroupHandler : IRequestHandler<PostTranslationGroupRequest, TranslationGroupDto>
     {
         private readonly DictionaryContext dbContext;
+        private readonly IMapper mapper;
 
-        public PostTranslationGroupHandler(DictionaryContext dbContext)
+        public PostTranslationGroupHandler(DictionaryContext dbContext, IMapper mapper)
         {
             this.dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task<int> Handle(PostTranslationGroupRequest request, CancellationToken cancellationToken)
+        public async Task<TranslationGroupDto> Handle(PostTranslationGroupRequest request, CancellationToken cancellationToken)
         {
             var tags = await GetTagsAsync(request.TranslationGroup.Tags, cancellationToken);
 
@@ -32,42 +35,34 @@ namespace Dictionary.BusinessLogic.TranslationGroup.Handlers
 
             await dbContext.SaveChangesAsync(cancellationToken);
 
-            return newTranslationGroup.TranslationGroupId;
+            return mapper.Map<TranslationGroupDto>(newTranslationGroup);
         }
 
         private async Task<List<Tag>> GetTagsAsync(List<TagDto> tags, CancellationToken cancellationToken)
         {
-            var newTagTexts = tags.Where(t => t.TagId == null).Select(t => t.Text);
+            var newTags = tags
+                .Where(t => t.TagId == null)
+                .Select(tag => 
+                    new TagBuilder()
+                        .SetText(tag.Text.Trim().ToLowerInvariant())
+                        .Build());
 
-            var newTags = new List<Tag>();
-            foreach (var newTagText in newTagTexts)
-            {
-                var newTag = new TagBuilder().SetText(newTagText).Build();
-                newTags.Add(newTag);
-            }
-
-            var existingTagIds = tags.Where(t => t.TagId != null).Select(t => t.TagId);
+            var existingTagIds = tags.Where(t => t.TagId != null).Select(t => t.TagId!.Value);
             var existingTags = await dbContext.Tags
                 .Where(t => existingTagIds.Contains(t.TagId))
                 .ToListAsync(cancellationToken);
 
-            return newTags.Union(existingTags).ToList();
+            return [.. newTags, .. existingTags];
         }
 
         private List<TranslationGroupTag> CreateTranslationGroupTags(Domain.TranslationGroup translationGroup, List<Tag> tags)
         {
-            var translationGroupTags = new List<TranslationGroupTag>();
-            foreach (var tag in tags)
-            {
-                var newTranslationGroupTag = new TranslationGroupTagBuilder()
+            return tags.Select(tag =>
+                new TranslationGroupTagBuilder()
                     .SetTranslationGroup(translationGroup)
                     .SetTag(tag)
-                    .Build();
-
-                translationGroupTags.Add(newTranslationGroupTag);
-            }
-
-            return translationGroupTags;
+                    .Build())
+                .ToList();
         }
     }
 }
