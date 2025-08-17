@@ -8,19 +8,19 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Dictionary.BusinessLogic.TranslationGroup.Handlers
 {
-    public class GetTranslationGroupsHandler : IRequestHandler<GetTranslationGroupsRequest, List<TranslationGroupDto>>
+    public class GetTranslationGroupListHandler : IRequestHandler<GetTranslationGroupListRequest, List<TranslationGroupDto>>
     {
         private readonly DictionaryContext dbContext;
         private readonly IMapper mapper;
 
-        public GetTranslationGroupsHandler(DictionaryContext dbContext,
+        public GetTranslationGroupListHandler(DictionaryContext dbContext,
             IMapper mapper) 
         {
             this.dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
             this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task<List<TranslationGroupDto>> Handle(GetTranslationGroupsRequest request, CancellationToken cancellationToken)
+        public async Task<List<TranslationGroupDto>> Handle(GetTranslationGroupListRequest request, CancellationToken cancellationToken)
         {
             var translationGroups = await dbContext.TranslationGroups
                 .AsNoTracking()
