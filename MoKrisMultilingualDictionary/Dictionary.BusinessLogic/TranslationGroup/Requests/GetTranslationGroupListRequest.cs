@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Dictionary.BusinessLogic.TranslationGroup.Requests
 {
-    public class GetTranslationGroupsRequest : IRequest<List<TranslationGroupDto>>
+    public class GetTranslationGroupListRequest : IRequest<List<TranslationGroupDto>>
     {
     }
 }

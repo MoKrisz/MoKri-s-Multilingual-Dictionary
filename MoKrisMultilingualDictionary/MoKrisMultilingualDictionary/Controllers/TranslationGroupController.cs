@@ -1,5 +1,4 @@
 using Dictionary.BusinessLogic.TranslationGroup.Requests;
-using Dictionary.Domain;
 using Dictionary.Models.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -16,6 +15,13 @@ namespace MoKrisMultilingualDictionary.Controllers
         public TranslationGroupController(IMediator mediator)
         {
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
+        }
+
+        [HttpGet]
+        public async Task<TranslationGroupDto> GetTranslationGroup([FromQuery] int translationGroupId)
+        {
+            var request = new GetTranslationGroupRequest { TranslationGroupId = translationGroupId };
+            return await mediator.Send(request);
         }
 
         [HttpPost]
