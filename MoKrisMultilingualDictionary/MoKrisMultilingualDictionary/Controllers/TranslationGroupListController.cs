@@ -19,7 +19,7 @@ namespace MoKrisMultilingualDictionary.Controllers
         [EnableQuery]
         public async Task<List<TranslationGroupDto>> Get()
         {
-            var request = new GetTranslationGroupsRequest();
+            var request = new GetTranslationGroupListRequest();
             return await mediator.Send(request);
         }
     }

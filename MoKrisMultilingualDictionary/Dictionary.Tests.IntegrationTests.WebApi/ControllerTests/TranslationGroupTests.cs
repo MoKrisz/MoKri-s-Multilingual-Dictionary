@@ -157,5 +157,60 @@ namespace Dictionary.Tests.IntegrationTests.WebApi.ControllerTests
             result.PotentialTranslationGroups.Any(ptg => ptg.TranslationGroupId == potentialTranslationGroup1.TranslationGroupId).Should().BeTrue();
             result.PotentialTranslationGroups.Any(ptg => ptg.TranslationGroupId == potentialTranslationGroup2.TranslationGroupId).Should().BeTrue();
         }
+
+        [Fact]
+        public async Task GetTranslationGroupTest()
+        {
+            var db = await fixture.GetDatabase();
+
+            var translationGroup = new TranslationGroupBuilder()
+                .SetDescription("Test")
+                .Build();
+
+            var tag = new TagBuilder()
+                .SetText("testtag")
+                .Build();
+
+            var translationGroupTag = new TranslationGroupTagBuilder()
+                .SetTranslationGroup(translationGroup)
+                .SetTag(tag)
+                .Build();
+
+            await db.TranslationGroups.AddRangeAsync(translationGroup);
+            await db.Tags.AddAsync(tag);
+            await db.TranslationGroupTags.AddAsync(translationGroupTag);
+            await db.SaveChangesAsync();
+
+            var url = $"/{TranslationGroupRoutes.ControllerBaseRoute}?translationGroupId={translationGroup.TranslationGroupId}";
+            var response = await client.GetAsync(url);
+            response.EnsureSuccessStatusCode();
+
+            var jsonResult = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<TranslationGroupDto>(jsonResult);
+
+            result.Should().NotBeNull();
+            result!.TranslationGroupId.Should().Be(translationGroup.TranslationGroupId);
+            result.Description.Should().Be(translationGroup.Description);
+            result.Tags.Count.Should().Be(1);
+            result.Tags.First().TagId.Should().Be(tag.TagId);
+            result.Tags.First().Text.Should().Be(tag.Text);
+        }
+
+        [Fact]
+        public async Task GetTranslationGroup_NotFoundTest()
+        {
+            var db = await fixture.GetDatabase();
+
+            var translationGroup = new TranslationGroupBuilder()
+                .SetDescription("Test")
+                .Build();
+
+            await db.TranslationGroups.AddRangeAsync(translationGroup);
+            await db.SaveChangesAsync();
+
+            var url = $"/{TranslationGroupRoutes.ControllerBaseRoute}/translationGroupId={translationGroup.TranslationGroupId + 1}";
+            var response = await client.GetAsync(url);
+            response.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
+        }
     }
 }
