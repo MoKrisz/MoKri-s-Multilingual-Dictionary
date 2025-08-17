@@ -1,4 +1,5 @@
 using Dictionary.BusinessLogic.TranslationGroup.Requests;
+using Dictionary.Domain;
 using Dictionary.Models.Dtos;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -17,28 +18,22 @@ namespace MoKrisMultilingualDictionary.Controllers
             this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
-        //public const string GetTranslationGroupRoute = "translation-group";
-        //[HttpGet(GetTranslationGroupRoute)]
-        //public async Task<TranslationGroupDto> GetTranslationGroup([FromQuery] int translationGroupId)
-        //{
-        //    var request = new GetTranslationGroupRequest { TranslationGroupId = translationGroupId };
-        //    return await mediator.Send(request);
-        //}
-
         [HttpPost]
-        public async Task<int> PostTranslationGroup([FromBody] TranslationGroupDto translationGroupDto)
+        public async Task<TranslationGroupDto> PostTranslationGroup([FromBody] TranslationGroupDto translationGroupDto)
         {
             var request = new PostTranslationGroupRequest { TranslationGroup = translationGroupDto };
             return await mediator.Send(request);
         }
 
-        //public const string PutTranslationGroupRoute = "translation-group";
-        //[HttpPut(PutTranslationGroupRoute)]
-        //public async Task<IActionResult> PutTranslationGroup([FromBody] TranslationGroupDto translationGroupDto)
-        //{
-        //    var request = new PutTranslationGroupRequest { TranslationGroup = translationGroupDto };
-        //    await mediator.Send(request);
-        //    return Ok();
-        //}
+        [HttpGet(TranslationGroupRoutes.WordRelatedTranslationGroupsRoute)]
+        public async Task<WordRelatedTranslationGroupsDto> GetWordRelatedTranslationGroups([FromQuery] int sourceWordId, int targetWordId)
+        {
+            var request = new GetWordRelatedTranslationGroupsRequest 
+            { 
+                SourceWordId = sourceWordId,
+                TargetWordId = targetWordId
+            };
+            return await mediator.Send(request);
+        }
     }
 }

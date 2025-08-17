@@ -1,6 +1,7 @@
 using Dictionary.Domain.Builders;
 using Dictionary.Domain.Enums;
 using Dictionary.Models.Dtos;
+using Dictionary.Tests.IntegrationTests.WebApi.Common;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
@@ -89,14 +90,5 @@ namespace Dictionary.Tests.IntegrationTests.WebApi.ControllerTests
 
             await dbContext.SaveChangesAsync();
         }
-    }
-
-    public class ODataResponse<T>
-    {
-        [JsonPropertyName("@odata.count")]
-        public int Count { get; set; }
-
-        [JsonPropertyName("value")]
-        public List<T> Values { get; set; } = default!;
     }
 }

@@ -14,6 +14,9 @@ namespace MoKrisMultilingualDictionary
             builder.EntitySet<WordDto>("WordList")
                 .EntityType.HasKey(w => w.WordId);
 
+            builder.EntitySet<TranslationGroupDto>("TranslationGroupList")
+                .EntityType.HasKey(tg => tg.TranslationGroupId);
+
             return builder.GetEdmModel();
         }
     }
