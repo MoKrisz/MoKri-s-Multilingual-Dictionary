@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
+using Dictionary.BusinessLogic.Exceptions;
 using Dictionary.BusinessLogic.TranslationGroup.Requests;
 using Dictionary.Data;
-using Dictionary.Domain;
 using Dictionary.Domain.Builders;
 using Dictionary.Models.Dtos;
 using MediatR;
@@ -22,47 +22,19 @@ namespace Dictionary.BusinessLogic.TranslationGroup.Handlers
 
         public async Task<TranslationGroupDto> Handle(PutTranslationGroupRequest request, CancellationToken cancellationToken)
         {
-            var tags = await GetTagsAsync(request.TranslationGroup.Tags, cancellationToken);
+            var translationGroup = await dbContext.TranslationGroups
+                .SingleOrDefaultAsync(tg => tg.TranslationGroupId == request.TranslationGroup.TranslationGroupId, cancellationToken);
 
-            var newTranslationGroup = new TranslationGroupBuilder()
+            if (translationGroup == null)
+            {
+                throw new NotFoundException(nameof(TranslationGroup));
+            }
+
+            translationGroup.GetBuilder()
                 .SetDescription(request.TranslationGroup.Description)
                 .Build();
 
-            var translationGroupTags = CreateTranslationGroupTags(newTranslationGroup, tags);
-
-            await dbContext.TranslationGroups.AddAsync(newTranslationGroup, cancellationToken);
-            await dbContext.TranslationGroupTags.AddRangeAsync(translationGroupTags, cancellationToken);
-
-            await dbContext.SaveChangesAsync(cancellationToken);
-
-            return mapper.Map<TranslationGroupDto>(newTranslationGroup);
-        }
-
-        private async Task<List<Tag>> GetTagsAsync(List<TagDto> tags, CancellationToken cancellationToken)
-        {
-            var newTags = tags
-                .Where(t => t.TagId == null)
-                .Select(tag => 
-                    new TagBuilder()
-                        .SetText(tag.Text.Trim().ToLowerInvariant())
-                        .Build());
-
-            var existingTagIds = tags.Where(t => t.TagId != null).Select(t => t.TagId!.Value);
-            var existingTags = await dbContext.Tags
-                .Where(t => existingTagIds.Contains(t.TagId))
-                .ToListAsync(cancellationToken);
-
-            return [.. newTags, .. existingTags];
-        }
-
-        private List<TranslationGroupTag> CreateTranslationGroupTags(Domain.TranslationGroup translationGroup, List<Tag> tags)
-        {
-            return tags.Select(tag =>
-                new TranslationGroupTagBuilder()
-                    .SetTranslationGroup(translationGroup)
-                    .SetTag(tag)
-                    .Build())
-                .ToList();
+            var syncedTags = 
         }
     }
 }
