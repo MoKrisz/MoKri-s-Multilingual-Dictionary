@@ -1,9 +1,14 @@
-﻿namespace Dictionary.BusinessLogic.Services.Synchronization
+﻿using Dictionary.BusinessLogic.Abstractions.Services.Synchronization;
+using Dictionary.Models.Dtos.Synchronization;
+
+namespace Dictionary.BusinessLogic.Services.Synchronization
 {
     public class DataSynchronizer : IDataSynchronizer
     {
-        public DataSynchronizerResult<TSource, TTarget> Synchronize<TSource, TTarget, TKey>(IEnumerable<TSource> source, IEnumerable<TTarget> target, IDataSynchronizerComparer<TSource, TTarget, TKey> comparer)
-            where TKey : struct
+        public DataSynchronizerResult<TSource, TTarget> Synchronize<TSource, TTarget, TKey>(
+            IEnumerable<TSource> source,
+            IEnumerable<TTarget> target,
+            IDataSynchronizerComparer<TSource, TTarget, TKey> comparer) where TKey : struct
         {
             var added = new List<TTarget>();
             var modified = new List<ModifiedItem<TSource, TTarget>>();
@@ -22,10 +27,10 @@
                         {
                             Source = sourceItem,
                             Target = targetItem,
-                        });
-
-                        sourceDictionary.Remove(targetKey.Value);
+                        }); 
                     }
+
+                    sourceDictionary.Remove(targetKey.Value);
                 }
                 else 
                 {

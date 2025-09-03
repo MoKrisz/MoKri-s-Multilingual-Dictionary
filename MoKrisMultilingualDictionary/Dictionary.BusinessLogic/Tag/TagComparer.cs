@@ -1,4 +1,4 @@
-﻿using Dictionary.BusinessLogic.Services.Synchronization;
+﻿using Dictionary.BusinessLogic.Abstractions.Services.Synchronization;
 using Dictionary.Models.Dtos;
 
 namespace Dictionary.BusinessLogic.Tag
