@@ -1,4 +1,4 @@
-﻿namespace Dictionary.BusinessLogic.Services.Synchronization
+﻿namespace Dictionary.BusinessLogic.Abstractions.Services.Synchronization
 {
     public interface IDataSynchronizerComparer<TSource, TTarget, TKey>
         where TKey : struct

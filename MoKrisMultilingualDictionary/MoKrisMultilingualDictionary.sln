@@ -5,7 +5,7 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dictionary.BusinessLogic", "Dictionary.BusinessLogic\Dictionary.BusinessLogic.csproj", "{D812CF1E-6310-4098-911F-8C8E75BA834D}"
 	ProjectSection(ProjectDependencies) = postProject
-		{3D18A3CD-A9D2-4918-9239-F84F13B54CA5} = {3D18A3CD-A9D2-4918-9239-F84F13B54CA5}
+		{8F2F5DA2-A54E-4F10-87D3-FCA55AD88963} = {8F2F5DA2-A54E-4F10-87D3-FCA55AD88963}
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MoKrisMultilingualDictionary", "MoKrisMultilingualDictionary\MoKrisMultilingualDictionary.csproj", "{78EFCD03-7D51-43FB-87D2-7EC447A5A7C1}"
@@ -33,6 +33,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dictionary.Tests.UnitTests"
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dictionary.Domain", "Dictionary.Domain\Dictionary.Domain.csproj", "{2CB12B66-0481-4231-BFA0-3A9B22DFDE88}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dictionary.BusinessLogic.Abstractions", "Dictionary.BusinessLogic.Abstractions\Dictionary.BusinessLogic.Abstractions.csproj", "{8F2F5DA2-A54E-4F10-87D3-FCA55AD88963}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BDE8720F-420A-44C8-86A7-1D09E66B0592} = {BDE8720F-420A-44C8-86A7-1D09E66B0592}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -72,6 +77,10 @@ Global
 		{2CB12B66-0481-4231-BFA0-3A9B22DFDE88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CB12B66-0481-4231-BFA0-3A9B22DFDE88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2CB12B66-0481-4231-BFA0-3A9B22DFDE88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F2F5DA2-A54E-4F10-87D3-FCA55AD88963}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F2F5DA2-A54E-4F10-87D3-FCA55AD88963}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F2F5DA2-A54E-4F10-87D3-FCA55AD88963}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F2F5DA2-A54E-4F10-87D3-FCA55AD88963}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

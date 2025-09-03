@@ -1,4 +1,6 @@
-﻿namespace Dictionary.BusinessLogic.Services.Synchronization
+﻿using Dictionary.Models.Dtos.Synchronization;
+
+namespace Dictionary.BusinessLogic.Abstractions.Services.Synchronization
 {
     public interface IDataSynchronizer
     {
