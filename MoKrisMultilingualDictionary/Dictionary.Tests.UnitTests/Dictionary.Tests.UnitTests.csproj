@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Dictionary.BusinessLogic\Dictionary.BusinessLogic.csproj" />
     <ProjectReference Include="..\Dictionary.Data\Dictionary.Data.csproj" />
   </ItemGroup>
 
