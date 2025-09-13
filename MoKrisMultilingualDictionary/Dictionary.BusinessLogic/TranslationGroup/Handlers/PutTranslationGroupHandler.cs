@@ -5,7 +5,6 @@ using Dictionary.BusinessLogic.Exceptions;
 using Dictionary.BusinessLogic.Tag;
 using Dictionary.BusinessLogic.TranslationGroup.Requests;
 using Dictionary.Data;
-using Dictionary.Domain;
 using Dictionary.Domain.Builders;
 using Dictionary.Models.Dtos;
 using MediatR;
@@ -56,13 +55,15 @@ namespace Dictionary.BusinessLogic.TranslationGroup.Handlers
                     .SetTranslationGroup(translationGroup)
                     .SetTag(tag)
                     .Build());
+            await dbContext.TranslationGroupTags.AddRangeAsync(addTranslationGroupTags, cancellationToken);
 
             var deleteTagIds = tagSyncResult.Deleted.Select(dt => dt.TagId);
-            //var deleteTranslationGroupTags = translationGroup.TranslationGroupTags
-            //    .Where(tgt => deleteTagIds.Contains(tgt.TagId))
-            //    .ToList();
+            var deleteTranslationGroupTags = translationGroup.TranslationGroupTags
+                .Where(tgt => deleteTagIds.Contains(tgt.TagId))
+                .ToList();
 
-            translationGroup.TranslationGroupTags.RemoveAll(tgt => deleteTagIds.Contains(tgt.TagId));
+            translationGroup.TranslationGroupTags.RemoveAll(deleteTranslationGroupTags.Contains);
+            dbContext.TranslationGroupTags.RemoveRange(deleteTranslationGroupTags);
 
             await dbContext.SaveChangesAsync(cancellationToken);
 

@@ -212,5 +212,80 @@ namespace Dictionary.Tests.IntegrationTests.WebApi.ControllerTests
             var response = await client.GetAsync(url);
             response.StatusCode.Should().Be(System.Net.HttpStatusCode.NotFound);
         }
+
+        [Fact]
+        public async Task PutTranslationGroupTest()
+        {
+            var db = await fixture.GetDatabase();
+
+            var tag = new TagBuilder().SetText("testtag1").Build();
+            var tag2 = new TagBuilder().SetText("testtag2").Build();
+            var translationGroup = new TranslationGroupBuilder().SetDescription("Test").Build();
+            var translationGroupTag = new TranslationGroupTagBuilder()
+                .SetTranslationGroup(translationGroup)
+                .SetTag(tag)
+                .Build();
+            var translationGroupTag2 = new TranslationGroupTagBuilder()
+                .SetTranslationGroup(translationGroup)
+                .SetTag(tag2)
+                .Build();
+
+            await db.Tags.AddAsync(tag);
+            await db.TranslationGroups.AddAsync(translationGroup);
+            await db.TranslationGroupTags.AddRangeAsync(translationGroupTag, translationGroupTag2);
+            await db.SaveChangesAsync();
+
+            var deletedTagWhenTheModificationHappened = new TagDto() { TagId = 99, Text = "testtag4" };
+
+            var translationGroupDto = new TranslationGroupDto
+            {
+                TranslationGroupId = translationGroup.TranslationGroupId,
+                Description = "description",
+                Tags = new List<TagDto>
+                {
+                    new TagDto() { TagId = tag.TagId, Text = tag.Text },
+                    new TagDto() { Text = "testtag3" },
+                    deletedTagWhenTheModificationHappened
+                }
+            };
+
+            var url = $"/{TranslationGroupRoutes.ControllerBaseRoute}";
+            var response = await client.PutAsJsonAsync(url, translationGroupDto);
+            response.EnsureSuccessStatusCode();
+
+            var jsonResult = await response.Content.ReadAsStringAsync();
+            var result = JsonSerializer.Deserialize<TranslationGroupDto>(jsonResult);
+
+            var assertTranslationGroup = await db.TranslationGroups
+                .AsNoTracking()
+                .Include(tg => tg.TranslationGroupTags)
+                    .ThenInclude(tgt => tgt.Tag)
+                .SingleAsync();
+
+            result.Should().NotBeNull();
+            assertTranslationGroup.TranslationGroupId.Should().Be(translationGroup.TranslationGroupId);
+            assertTranslationGroup.Description.Should().Be(translationGroupDto.Description);
+            result!.TranslationGroupId.Should().Be(translationGroup.TranslationGroupId);
+            result.Description.Should().Be(translationGroupDto.Description);
+
+            (await db.TranslationGroupTags.CountAsync())
+                .Should().Be(translationGroupDto.Tags.Count);
+            (await db.TranslationGroupTags.SingleOrDefaultAsync(tgt => tgt.TranslationGroupTagId == translationGroupTag2.TranslationGroupTagId))
+                .Should().BeNull();
+
+            (await db.Tags.CountAsync()).Should().Be(translationGroupDto.Tags.Count + 1);
+            (await db.Tags.SingleOrDefaultAsync(t => t.TagId == tag2.TagId)).Should().NotBeNull();
+
+            assertTranslationGroup.TranslationGroupTags.Count.Should().Be(translationGroupDto.Tags.Count);
+            result.Tags.Count.Should().Be(translationGroupDto.Tags.Count);
+            foreach (var tagDto in translationGroupDto.Tags)
+            {
+                assertTranslationGroup.TranslationGroupTags.Any(tgt => tgt.Tag.Text == tagDto.Text.ToLowerInvariant()).Should().BeTrue();
+                result.Tags.Any(t => t.Text == tagDto.Text.ToLowerInvariant()).Should().BeTrue();
+            }
+
+            var tag4 = await db.Tags.SingleAsync(t => t.Text.Equals(deletedTagWhenTheModificationHappened.Text));
+            tag4!.TagId.Should().NotBe(deletedTagWhenTheModificationHappened.TagId);
+        }
     }
 }
