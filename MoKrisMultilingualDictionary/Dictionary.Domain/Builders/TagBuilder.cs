@@ -10,6 +10,12 @@ namespace Dictionary.Domain.Builders
         public TagBuilder(Tag entity) : base(entity, new TagValidator())
         { }
 
+        internal TagBuilder SetTagId(int tagId)
+        {
+            _entity.TagId = tagId;
+            return this;
+        }
+
         public TagBuilder SetText(string text)
         {
             _entity.Text = text;
