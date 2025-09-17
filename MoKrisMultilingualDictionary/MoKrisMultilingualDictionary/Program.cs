@@ -42,6 +42,8 @@ builder.Services.AddControllers()
                           .AddRouteComponents("odata", odataEdmModel)
     );
 
+builder.Services.AddBussinessLogic();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

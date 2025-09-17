@@ -31,6 +31,13 @@ namespace MoKrisMultilingualDictionary.Controllers
             return await mediator.Send(request);
         }
 
+        [HttpPut]
+        public async Task<TranslationGroupDto> PutTranslationGroup([FromBody] TranslationGroupDto translationGroupDto)
+        {
+            var request = new PutTranslationGroupRequest { TranslationGroup = translationGroupDto };
+            return await mediator.Send(request);
+        }
+
         [HttpGet(TranslationGroupRoutes.WordRelatedTranslationGroupsRoute)]
         public async Task<WordRelatedTranslationGroupsDto> GetWordRelatedTranslationGroups([FromQuery] int sourceWordId, int targetWordId)
         {
