@@ -1,0 +1,39 @@
+name: Pull request Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+      - development
+
+jobs:
+  test:
+    name: ${{ matrix.name }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: Unit Tests
+            project: MoKrisMultilingualDictionary/Dictionary.Tests.UnitTests/Dictionary.Tests.UnitTests.csproj
+          - name: Integration Tests
+            project: MoKrisMultilingualDictionary/Dictionary.Tests.IntegrationTests.WebApi/Dictionary.Tests.IntegrationTests.WebApi.csproj
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+            dotnet-version: '8.0.x'
+
+      - name: Restore
+        run: dotnet restore MoKrisMultilingualDictionary/MoKrisMultilingualDictionary.sln
+
+      - name: Build
+        run: dotnet build MoKrisMultilingualDictionary/MoKrisMultilingualDictionary.sln --configuration Release --no-restore
+
+      - name: Run Tests
+        run: dotnet test ${{ matrix.project }} --configuration Release --no-build
