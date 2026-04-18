@@ -2,7 +2,7 @@ version: '3.8'
 name: mokris-multilingual-dictionary
 services:
   postgres-db:
-    image: postgres:latest
+    image: postgres:17
     container_name: postgres-db
     env_file:
       - path: ./postgres-db.env
