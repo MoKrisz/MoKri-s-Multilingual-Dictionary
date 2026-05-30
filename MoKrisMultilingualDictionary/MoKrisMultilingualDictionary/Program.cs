@@ -18,8 +18,6 @@ builder.Services.AddDbContext<DictionaryContext>(options => options.UseNpgsql(bu
 
 builder.Services.AddAutoMapper(typeof(Program));
 
-builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(GetWordHandler).Assembly));
-
 var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 builder.Services.AddCors(options =>
 {

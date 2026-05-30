@@ -126,8 +126,14 @@
   <data name="EitherMustHaveValue" xml:space="preserve">
     <value>Either {0} or {1} must have a value.</value>
   </data>
+  <data name="InvalidValue" xml:space="preserve">
+    <value>{0} is an invalid value for {1}</value>
+  </data>
   <data name="MaximumLength" xml:space="preserve">
     <value>The length of {0} cannot exceed {1} characters.</value>
+  </data>
+  <data name="MustBeBetweenValues" xml:space="preserve">
+    <value>{0} must be between {1} and {2}</value>
   </data>
   <data name="MustHaveValue" xml:space="preserve">
     <value>The {0} must have a value.</value>
