@@ -15,7 +15,7 @@ namespace Dictionary.BusinessLogic.Practice.GuessArticle.Validators
         {
             RuleFor(x => x.Amount)
                 .InclusiveBetween(MinWordAmount, MaxWordAmount)
-                .WithMessage(string.Format(ValidationMessages.MustBeBetweenValues, MinWordAmount, MaxWordAmount));
+                .WithMessage(x => string.Format(ValidationMessages.MustBeBetweenValues, nameof(x.Amount), MinWordAmount, MaxWordAmount));
 
             RuleFor(x => x.LanguageCode)
                 .Must(x => EnumService.TryConvertFromInt<LanguageCodeEnum>(x, out var _))
