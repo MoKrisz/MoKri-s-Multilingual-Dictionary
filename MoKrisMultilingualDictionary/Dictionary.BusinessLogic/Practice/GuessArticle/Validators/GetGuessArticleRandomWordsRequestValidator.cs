@@ -8,8 +8,8 @@ namespace Dictionary.BusinessLogic.Practice.GuessArticle.Validators
 {
     public class GetGuessArticleRandomWordsRequestValidator : AbstractValidator<GetGuessArticleRandomWordsRequest>
     {
-        private const int MinWordAmount = 1;
-        private const int MaxWordAmount = 20;
+        public const int MinWordAmount = 1;
+        public const int MaxWordAmount = 20;
 
         public GetGuessArticleRandomWordsRequestValidator()
         {
