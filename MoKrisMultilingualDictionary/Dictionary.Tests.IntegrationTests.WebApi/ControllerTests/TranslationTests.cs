@@ -35,7 +35,7 @@ namespace Dictionary.Tests.IntegrationTests.WebApi.ControllerTests
                 .Build();
 
             var targetWord = new WordBuilder()
-                .SetArticle("Das")
+                .SetArticle("das")
                 .SetText("Test")
                 .SetPlural("Tests")
                 .SetType(WordTypeEnum.Noun)

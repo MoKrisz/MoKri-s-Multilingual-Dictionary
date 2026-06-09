@@ -61,7 +61,7 @@ namespace Dictionary.Resources.Messages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Article could only have value, if the Language is German (DE)..
+        ///   Looks up a localized string similar to Article should only have value, if the word is a noun, and the language supports it..
         /// </summary>
         public static string ArticleMustBeEmpty {
             get {

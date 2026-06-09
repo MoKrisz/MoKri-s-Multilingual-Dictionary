@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ArticleMustBeEmpty" xml:space="preserve">
-    <value>Article could only have value, if the Language is German (DE).</value>
+    <value>Article should only have value, if the word is a noun, and the language supports it.</value>
   </data>
   <data name="ConjugationMustBeEmpty" xml:space="preserve">
     <value>Only verbs can have conjugation.</value>

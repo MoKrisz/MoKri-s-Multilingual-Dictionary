@@ -106,7 +106,7 @@ namespace Dictionary.Tests.IntegrationTests.WebApi.ControllerTests
                 .Build();
 
             var targetWord = new WordBuilder()
-                .SetArticle("Die")
+                .SetArticle("die")
                 .SetText("Test")
                 .SetPlural("Tests")
                 .SetType(WordTypeEnum.Noun)
