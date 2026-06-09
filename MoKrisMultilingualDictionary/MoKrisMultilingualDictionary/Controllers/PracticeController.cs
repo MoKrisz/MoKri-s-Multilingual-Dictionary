@@ -23,5 +23,13 @@ namespace MoKrisMultilingualDictionary.Controllers
             var request = new GetGuessArticleRandomWordsRequest { LanguageCode = languageCode, Amount = amount };
             return await mediator.Send(request);
         }
+
+        [HttpPost(PracticeRoutes.PostGuessArticleEvaluation)]
+        public async Task<List<EvaluateGuessArticleResponseItemDto>> PostGuessArticleEvaluation([FromBody] EvaluateGuessArticleRequestDto requestDto)
+        {
+            var request = new EvaluateGuessArticleRequest() { Guesses = requestDto.Guesses };
+
+            return await mediator.Send(request);
+        }
     }
 }
