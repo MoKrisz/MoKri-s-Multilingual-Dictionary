@@ -21,6 +21,7 @@ namespace Dictionary.BusinessLogic
             });
 
             services.AddTransient<IValidator<GetGuessArticleRandomWordsRequest>, GetGuessArticleRandomWordsRequestValidator>();
+            services.AddTransient<IValidator<EvaluateGuessArticleRequest>, EvaluateGuessArticleRequestValidator>();
 
             services.AddScoped<ITagService, TagService>();
 

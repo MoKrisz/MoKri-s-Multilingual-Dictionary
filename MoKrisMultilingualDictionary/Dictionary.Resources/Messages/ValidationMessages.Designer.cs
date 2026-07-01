@@ -106,6 +106,15 @@ namespace Dictionary.Resources.Messages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} cannot be greater than {1}.
+        /// </summary>
+        public static string MaximumValue {
+            get {
+                return ResourceManager.GetString("MaximumValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0} must be between {1} and {2}.
         /// </summary>
         public static string MustBeBetweenValues {

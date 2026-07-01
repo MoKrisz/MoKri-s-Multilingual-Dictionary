@@ -132,6 +132,9 @@
   <data name="MaximumLength" xml:space="preserve">
     <value>The length of {0} cannot exceed {1} characters.</value>
   </data>
+  <data name="MaximumValue" xml:space="preserve">
+    <value>{0} cannot be greater than {1}</value>
+  </data>
   <data name="MustBeBetweenValues" xml:space="preserve">
     <value>{0} must be between {1} and {2}</value>
   </data>

@@ -5,6 +5,7 @@ using MediatR;
 namespace Dictionary.BusinessLogic.Behaviors
 {
     public class RequestValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+        where TRequest : notnull
     {
         private readonly IEnumerable<IValidator<TRequest>> validators;
 
@@ -15,17 +16,20 @@ namespace Dictionary.BusinessLogic.Behaviors
 
         public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
         {
-            var context = new ValidationContext<TRequest>(request);
-
-            var errors = validators
-                .Select(x => x.Validate(context))
-                .SelectMany(x => x.Errors)
-                .Where(x => x != null)
-                .ToList();
-
-            if (errors.Any())
+            if (validators.Any())
             {
-                throw new RequestValidationException(typeof(TRequest).ToString(), string.Join(", ", errors.Select(e => e.ErrorMessage)));
+                var context = new ValidationContext<TRequest>(request);
+
+                var errors = validators
+                    .Select(x => x.Validate(context))
+                    .SelectMany(x => x.Errors)
+                    .Where(x => x != null)
+                    .ToList();
+
+                if (errors.Any())
+                {
+                    throw new RequestValidationException(typeof(TRequest).ToString(), string.Join(", ", errors.Select(e => e.ErrorMessage)));
+                }
             }
 
             return await next();
