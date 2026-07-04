@@ -3,7 +3,9 @@ using Dictionary.Domain;
 using Dictionary.Domain.Builders;
 using Dictionary.Domain.Enums;
 using Dictionary.Models.Dtos;
+using Dictionary.Tests.Common.Factories;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using MoKrisMultilingualDictionary.Routes;
 using System.Net.Http.Json;
 
@@ -94,37 +96,103 @@ namespace Dictionary.Tests.IntegrationTests.WebApi.ControllerTests
             result!.Should().BeEmpty();
         }
 
-        private async Task<List<Word>> SeedGuessArticleWords(DictionaryContext dbContext)
+        [Fact]
+        public async Task EvaluateGuessArticle_WhenRequestIsValid_ReturnsEvaluatedGuesses()
         {
-            const int nounCount = 8;
+            var db = await fixture.GetDatabase();
 
+            var words = await SeedGuessArticleWords(db, 2);
+
+            var url = $"/{PracticeRoutes.ControllerBaseRoute}/{PracticeRoutes.PostGuessArticleEvaluation}";
+            var requestDto = new EvaluateGuessArticleRequestDto
+            {
+                Guesses = new List<EvaluateGuessArticleRequestItemDto>
+                {
+                    new() { WordId = words[0].WordId, Answer = words[0].Article! },
+                    new() { WordId = words[1].WordId, Answer = words[1].Article!+"a" },
+                }
+            };
+
+            var response = await client.PostAsJsonAsync(url, requestDto);
+            response.EnsureSuccessStatusCode();
+
+            var result = await response.Content.ReadFromJsonAsync<List<EvaluateGuessArticleResponseItemDto>>();
+
+            result.Should().NotBeNull();
+            result.Should().HaveCount(2);
+
+            result.Should().ContainEquivalentOf(new EvaluateGuessArticleResponseItemDto
+            {
+                WordId = words[0].WordId,
+                Text = words[0].Text,
+                Answer = requestDto.Guesses[0].Answer,
+                CorrectArticle = words[0].Article!,
+                IsCorrect = true
+            });
+
+            result.Should().ContainEquivalentOf(new EvaluateGuessArticleResponseItemDto
+            {
+                WordId = words[1].WordId,
+                Text = words[1].Text,
+                Answer = requestDto.Guesses[1].Answer,
+                CorrectArticle = words[1].Article!,
+                IsCorrect = false
+            });
+        }
+
+        [Fact]
+        public async Task EvaluateGuessArticle_WhenSomeGuessesAreNotEvaluable_ReturnsOnlyEvaluableWords()
+        {
+            var db = await fixture.GetDatabase();
+
+            var words = await SeedGuessArticleWords(db, 2);
+
+            var verb = await db.Words.FirstAsync(w => w.Type == WordTypeEnum.Verb);
+
+            var englishNoun = await db.Words.FirstAsync(w => w.LanguageCode == LanguageCodeEnum.EN && w.Type == WordTypeEnum.Noun);
+
+            var url = $"/{PracticeRoutes.ControllerBaseRoute}/{PracticeRoutes.PostGuessArticleEvaluation}";
+            var requestDto = new EvaluateGuessArticleRequestDto
+            {
+                Guesses = new List<EvaluateGuessArticleRequestItemDto>
+                {
+                    new() { WordId = words[0].WordId, Answer = words[0].Article! },
+                    new() { WordId = verb.WordId, Answer = "das" },
+                    new() { WordId = englishNoun.WordId, Answer = string.Empty }
+                }
+            };
+
+            var response = await client.PostAsJsonAsync(url, requestDto);
+            response.EnsureSuccessStatusCode();
+
+            var result = await response.Content.ReadFromJsonAsync<List<EvaluateGuessArticleResponseItemDto>>();
+
+            result.Should().NotBeNull();
+            result.Should().ContainSingle();
+
+            result.Should().ContainEquivalentOf(new EvaluateGuessArticleResponseItemDto
+            {
+                WordId = words[0].WordId,
+                Text = words[0].Text,
+                Answer = requestDto.Guesses[0].Answer,
+                CorrectArticle = words[0].Article!,
+                IsCorrect = true
+            });
+        }
+
+        private async Task<List<Word>> SeedGuessArticleWords(DictionaryContext dbContext, int nounCount = 8)
+        {
             List<Word> words = new List<Word>();
             for (int i = 0; i < nounCount; i++)
             {
-                var noun = new WordBuilder()
-                    .SetArticle("das")
-                    .SetText("Test_"+i)
-                    .SetPlural("Tests_"+i)
-                    .SetType(WordTypeEnum.Noun)
-                    .SetLanguageCode(LanguageCodeEnum.DE)
-                    .Build();
+                var noun = WordFactory.GermanNoun("das", "Test_" + i, "Tests_" + i);
 
                 words.Add(noun);
             }
 
-            var otherLanguageNoun = new WordBuilder()
-                    .SetText("Test_Other")
-                    .SetPlural("Tests_Other")
-                    .SetType(WordTypeEnum.Noun)
-                    .SetLanguageCode(LanguageCodeEnum.EN)
-                    .Build();
+            var otherLanguageNoun = WordFactory.EnglishNoun();
 
-            var verb = new WordBuilder()
-                .SetText("tests")
-                .SetConjugation("tests")
-                .SetType(WordTypeEnum.Verb)
-                .SetLanguageCode(LanguageCodeEnum.DE)
-                .Build();
+            var verb = WordFactory.GermanVerb();
 
             List<Word> addableWord = [..words, otherLanguageNoun, verb];
 
