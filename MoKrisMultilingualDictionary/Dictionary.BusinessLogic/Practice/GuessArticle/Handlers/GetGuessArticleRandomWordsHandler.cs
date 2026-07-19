@@ -17,7 +17,7 @@ namespace Dictionary.BusinessLogic.Practice.GuessArticle.Handlers
 
         public async Task<List<GuessArticleWordDto>> Handle(GetGuessArticleRandomWordsRequest request, CancellationToken cancellationToken)
         {
-            return await dbContext.Words
+            var randomWords = await dbContext.Words
                 .AsNoTracking()
                 .Where(w => (int)w.LanguageCode == request.LanguageCode
                     && w.Type == Domain.Enums.WordTypeEnum.Noun)
@@ -29,6 +29,8 @@ namespace Dictionary.BusinessLogic.Practice.GuessArticle.Handlers
                     Text = w.Text
                 })
                 .ToListAsync(cancellationToken);
+
+            return randomWords;
         }
     }
 }
