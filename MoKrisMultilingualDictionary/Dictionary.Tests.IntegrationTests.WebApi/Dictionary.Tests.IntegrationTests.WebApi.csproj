@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Dictionary.Models\Dictionary.Models.csproj" />
+    <ProjectReference Include="..\Dictionary.Tests.Common\Dictionary.Tests.Common.csproj" />
     <ProjectReference Include="..\MoKrisMultilingualDictionary\MoKrisMultilingualDictionary.csproj" />
   </ItemGroup>
 

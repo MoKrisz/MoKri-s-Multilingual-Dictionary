@@ -1,5 +1,6 @@
 ﻿using Dictionary.Domain.Constants;
 using Dictionary.Domain.Enums;
+using Dictionary.Domain.Rules;
 using Dictionary.Resources.Messages;
 using FluentValidation;
 
@@ -11,14 +12,20 @@ namespace Dictionary.Domain.Validators
         {
             RuleFor(x => x.Article)
                 .Empty()
-                .When(x => x.LanguageCode != LanguageCodeEnum.DE 
-                    || x.Type != WordTypeEnum.Noun, ApplyConditionTo.CurrentValidator)
+                .When(x => x.Type != WordTypeEnum.Noun
+                    || !WordArticleRules.ValidArticlesByLanguage.ContainsKey(x.LanguageCode), ApplyConditionTo.CurrentValidator)
                 .WithMessage(ValidationMessages.ArticleMustBeEmpty)
                 //
                 .NotEmpty()
-                .When(x => x.LanguageCode == LanguageCodeEnum.DE 
-                    && x.Type == WordTypeEnum.Noun, ApplyConditionTo.CurrentValidator)
+                .When(x => x.Type == WordTypeEnum.Noun
+                    && WordArticleRules.ValidArticlesByLanguage.ContainsKey(x.LanguageCode), ApplyConditionTo.CurrentValidator)
                 .WithMessage(x => string.Format(ValidationMessages.MustHaveValue, nameof(x.Article)))
+                //
+                .Must((w, v) => WordArticleRules.ValidArticlesByLanguage[w.LanguageCode].Contains(v!))
+                .When(x => x.Type == WordTypeEnum.Noun
+                    && WordArticleRules.ValidArticlesByLanguage.ContainsKey(x.LanguageCode)
+                    && !string.IsNullOrEmpty(x.Article), ApplyConditionTo.CurrentValidator)
+                .WithMessage(x => string.Format(ValidationMessages.InvalidValue, x.Article, nameof(x.Article)))
                 //
                 .MaximumLength(WordConstants.ArticleMaxLength)
                 .WithMessage(x => string.Format(ValidationMessages.MaximumLength, nameof(x.Article), WordConstants.ArticleMaxLength));
