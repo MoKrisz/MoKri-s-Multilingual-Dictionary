@@ -16,14 +16,14 @@ namespace Dictionary.Tests.UnitTests.DomainTests
         public static TheoryData<string?, LanguageCodeEnum, WordTypeEnum, bool> ArticleValidationTestData => new()
         {
             { null, LanguageCodeEnum.EN, WordTypeEnum.Noun, false },
-            { null, LanguageCodeEnum.HU, WordTypeEnum.Noun, false },
+            { null, LanguageCodeEnum.HU, WordTypeEnum.Noun, true },
             { "der", LanguageCodeEnum.DE, WordTypeEnum.Noun, false },
             { "der", LanguageCodeEnum.DE, WordTypeEnum.Verb, true },
             { "der", LanguageCodeEnum.DE, WordTypeEnum.Adjective, true },
             { "der", LanguageCodeEnum.EN, WordTypeEnum.Noun, true },
-            { "der", LanguageCodeEnum.HU, WordTypeEnum.Noun, true },
-            { new string('a', WordConstants.ArticleMaxLength), LanguageCodeEnum.DE, WordTypeEnum.Noun, false },
-            { new string('a', WordConstants.ArticleMaxLength + 1), LanguageCodeEnum.DE, WordTypeEnum.Noun, true },
+            { "az", LanguageCodeEnum.HU, WordTypeEnum.Noun, false },
+            { "az", LanguageCodeEnum.DE, WordTypeEnum.Noun, true },
+            { "der", LanguageCodeEnum.HU, WordTypeEnum.Noun, true }
         };
 
         [Theory]

@@ -61,7 +61,7 @@ namespace Dictionary.Resources.Messages {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Article could only have value, if the Language is German (DE)..
+        ///   Looks up a localized string similar to Article should only have value, if the word is a noun, and the language supports it..
         /// </summary>
         public static string ArticleMustBeEmpty {
             get {
@@ -88,11 +88,38 @@ namespace Dictionary.Resources.Messages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} is an invalid value for {1}.
+        /// </summary>
+        public static string InvalidValue {
+            get {
+                return ResourceManager.GetString("InvalidValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The length of {0} cannot exceed {1} characters..
         /// </summary>
         public static string MaximumLength {
             get {
                 return ResourceManager.GetString("MaximumLength", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} cannot be greater than {1}.
+        /// </summary>
+        public static string MaximumValue {
+            get {
+                return ResourceManager.GetString("MaximumValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} must be between {1} and {2}.
+        /// </summary>
+        public static string MustBeBetweenValues {
+            get {
+                return ResourceManager.GetString("MustBeBetweenValues", resourceCulture);
             }
         }
         
